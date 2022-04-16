@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    height: 100vh;
+}
+.main {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+.left-side {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    height: 90%;
+    border: 1px solid black;
+    margin: 30px 10px 50px 20px;
+    padding: 10px;
+}
+.right-side {
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    background-color: #f1f1f3;
+    width: 100%;
+    height: 90%;
+    margin: 30px 10px 50px 20px;
+    padding: 10px;
+}
+.search-bar {
+    display: flex;
+    justify-content: space-around;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    overflow:scroll;
+}
+.job {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    border: 1px solid rgba(72,118,160,255);
+    margin: 20px 5px 0px 5px;
+    background-color: white;
+    width: 100%;
+    height: 150px;
+}
+.job-img {
+    display: flex;
+    width: 20%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.job-des {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding: 10px;
+}
+.job-actions{
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.main-title {
+    font-weight: bold;
+}
+.main-title-job {
+    font-weight: bold;
+    font-size: 20px;
+}
+.second-title-job {
+    font-size: 15;
+    margin-top: 10px;
+}
+.thired-title-job{
+    font-size: 10;
+    margin-top: 10px;
+}
+.four-title-job{
+    font-size: 5;
+    margin-top: 5px;
+    color: gray
+}
+.job-icon{
+    margin:5px 5px 5px 5px;
+}
+input[type='checkbox'] {
+    margin: 10px 5px 5px 10px;
+}
+.search-bar-button{
+    height: 35px;
+    width: 90%;
+}
+.main-button {
+    background-color: #2196f3;
+    border: 1px solid #2196f3;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.secondary-button {
+    background-color: #bfc3c9;
+    border: 1px solid #bfc3c9;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.submit-job-div{
+    margin: 5% 2% 2% 2%;
+}
+.cancel-div{
+    margin: 5% 1px 2% 1%;
+}
+.selector{
+    height: 40px;
+    width: 49%;
+    color: #969a9c
+}

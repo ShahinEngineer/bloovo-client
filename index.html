@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>bloovo</title>
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="./css/styles.css" />
+        <link rel="stylesheet" href="./css/modal.css" />
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="left-side">
+                <form action="#" method="post" class="demoForm" id="demoForm">
+                    <span class="main-title">Sector</span>
+                    <input type="checkbox" id="sector" name="job[]" value="Sales" />
+                    <label for="Sales">Sales</label><br />
+                    <input type="checkbox" id="sector" name="job[]" value="Airlines" />
+                    <label for="Airlines"> Airlines</label><br />
+                    <input type="checkbox" id="sector" name="job[]" value="Administration" />
+                    <label for="Administration"> Administration</label><br />
+                    <input type="checkbox" id="sector" name="job[]" value="computerSoftware" />
+                    <label for="computerSoftware"> computer Software</label><br />
+                    <span class="main-title">Country</span>
+                    <input type="checkbox" id="country" name="job[]" value="palestine" />
+                    <label for="palestine">Palestine</label><br />
+                    <input type="checkbox" id="country" name="job[]" value="Jordan" />
+                    <label for="Jordan"> Jordan</label><br />
+                    <input type="checkbox" id="country" name="job[]" value="Lebanon" />
+                    <label for="Lebanon"> Lebanon</label><br />
+                    <input type="checkbox" id="country" name="job[]" value="SaudiArabia" />
+                    <label for="SaudiArabia">Saudi Arabia</label><br />
+                    <span class="main-title">City</span>
+                    <input type="checkbox" id="city" name="job[]" value="Beirut" />
+                    <label for="Beirut">Beirut</label><br />
+                </form>
+            </div>
+            <div class="right-side">
+                <div class="search-bar">
+                    <input
+                        class="search-bar-button"
+                        type="text"
+                        id="searchInput"
+                        onkeyup="handleSearchByTitle(this.value)"
+                        placeholder="Search By Job Title"
+                        name="search"
+                    />
+                    <button id="myBtn" type="button">Add New Job</button>
+                </div>
+                <div class="main-content" id="main-content"></div>
+            </div>
+        </div>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="add-job-modal">
+                    <div class="add-job-modal-header">
+                        <h4>Add New Job Post</h4>
+                    </div>
+                    <form id="target" action="index.html" method="POST">
+                        <div class="add-job-modal-form">
+                            <div class="form-input-sec-one">
+                                <input class="input-modal" type="text" name="title" id="title" placeholder="Job title" />
+                                <select class="selector" name="sector" id="sector">
+                                    <option name="sales" value="sales">sales</option>
+                                    <option name="airlines" value="airlines">Airlines</option>
+                                    <option name="Administration" value="administration">Administration</option>
+                                    <option name="Computer software" value="computerSoftware">Computer Software</option>
+                                </select>
+                            </div>
+                            <div class="form-input-sec-one">
+                                <select class="selector" name="country" id="country">
+                                    <option name="Palestine" value="Palestine">Palestine</option>
+                                    <option name="Jordan" value="Jordan">Jordan</option>
+                                    <option name="Lebanon" value="Lebanon">Lebanon</option>
+                                </select>
+                                <select class="selector" name="city" id="city">
+                                    <option name="Beirut" value="Beirut">Beirut</option>
+                                </select>
+                            </div>
+                            <div class="form-input-sec-one">
+                                <textarea name="description" id="description" rows="8 " cols="150" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="end-job-modal">
+                            <button class="secondary-button cancel-div" type="button" id="addNewJon" id="closeModel" onclick="closeModel()" name="AddNewJob">
+                                cancel
+                            </button>
+                            <button type="submit" class="main-button submit-job-div" type="button" id="addNewJon" name="AddNewJob">Add new Job</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <script>
+                var result = [];
+                var content = '#main-content';
+                var dataSideFilter = [];
+                var modal = document.getElementById('myModal');
+                var btn = document.getElementById('myBtn');
+                var span = document.getElementsByClassName('close')[0];
+                btn.onclick = function () {
+                    modal.style.display = 'block';
+                    $('#target')[0].reset();
+                };
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                };
+                function closeModel() {
+                    modal.style.display = 'none';
+                }
+
+                function handleAddContent(result) {
+                    $(content).empty();
+                    for (var i = 0; i < result.length; i++) {
+                        $(content).append(
+                            `<div class="job" id='job-${result[i]._id}'>
+                                <div class="job-img">
+                                    <img src="./imges/job.png" width="125" height="125" />
+                                </div>
+                                <div class="job-des">
+                                    <span class="main-title-job">${result[i].title}</span>
+                                    <span class="second-title-job">${result[i].city}, ${result[i].country}</span>
+                                    <span class="thired-title-job">${result[i].sector}</span>
+                                    <span class="four-title-job">${result[i].description}</span>
+                                    </div>
+                                    <div class="job-actions">
+                                    <img class="job-icon" onclick="handleViewModel('${i}')"src="./imges/eye.png" width="25" height="25" />
+                                    <img class="job-icon" onclick="handleDeleteIem('${result[i]._id}','${i}')" src="./imges/delete.png" width="25" height="25" />
+                                </div>
+                             </div>`
+                        );
+                    }
+                }
+
+                $('#target').submit(function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        url: 'http://localhost:8000/api/job',
+                        type: 'post',
+                        dataType: 'json',
+                        data: $('form#target').serialize(),
+                        success: function (data) {
+                            // ... do something with the data...
+                            alert('success');
+                            const obj = data.result;
+                            const newIndex = result.length;
+                            result.push(obj);
+                            $(content).append(
+                                `<div class="job" id='job-${obj._id}'>
+                                        <div class="job-img">
+                                            <img src="./imges/job.png" width="125" height="125" />
+                                        </div>
+                                        <div class="job-des">
+                                            <span class="main-title-job">${obj.title}</span>
+                                            <span class="second-title-job">${obj.city}, ${obj.country}</span>
+                                            <span class="thired-title-job">${obj.sector}</span>
+                                            <span class="four-title-job">${obj.description}</span>
+                                         </div>
+                                         <div class="job-actions">
+                                            <img class="job-icon" onclick="handleViewModel('${newIndex}')"src="./imges/eye.png" width="25" height="25" />
+                                            <img class="job-icon" onclick="handleDeleteIem('${obj._id}','${newIndex}')" src="./imges/delete.png" width="25" height="25" />
+                                        </div>
+                                    </div>`
+                            );
+                            modal.style.display = 'none';
+                        },
+                        error: function (error) {
+                            console.log(error, 'welcome');
+                        },
+                    });
+                });
+                $(document).ready(function () {
+                    $.ajax({
+                        type: 'get',
+                        url: 'http://localhost:8000/api/job',
+                        dataType: 'json',
+                        success: function (data) {
+                            $(content).empty();
+                            result = data.result;
+                            handleAddContent(result);
+                        },
+                        error: function (error) {
+                            console.log(error, 'welcome');
+                        },
+                    });
+                });
+                function handleDeleteIem(id, index) {
+                    $.ajax({
+                        url: 'http://localhost:8000/api/job',
+                        data: 'id=' + id,
+                        type: 'Delete',
+                        success: function (data) {
+                            alert('success deleteing Message');
+                            $(`#job-${id}`).remove();
+                            result.splice(index, 1);
+                        },
+                    });
+                }
+                function handleViewModel(id) {
+                    const values = result[id];
+                    if (values) {
+                        modal.style.display = 'block';
+                        document.getElementById('title').value = values.title;
+                        document.getElementById('sector').value = values.sector;
+                        document.getElementById('country').value = values.country;
+                        document.getElementById('city').value = values.city;
+                        document.getElementById('description').value = values.description;
+                    }
+                }
+
+                function handleSearchByTitle(val) {
+                    const dataFilter = result.filter((item) => {
+                        return item.title.toLowerCase().includes(val.toLowerCase());
+                    });
+                    handleAddContent(dataFilter);
+                }
+                // handle left side selection
+                var jobs = document.forms['demoForm'].elements['job[]'];
+                for (var i = 0, len = jobs.length; i < len; i++) {
+                    jobs[i].onclick = doSomething;
+                }
+                // append_result
+                // remove
+                function doSomething() {
+                    if (this.checked) {
+                        const dataFilter = result.filter((item) => {
+                            return (
+                                item.sector.toLowerCase().includes(this.value.toLowerCase()) ||
+                                item.country.toLowerCase().includes(this.value.toLowerCase()) ||
+                                item.city.toLowerCase().includes(this.value.toLowerCase())
+                            );
+                        });
+                        dataSideFilter.push(...dataFilter);
+                        handleAddContent(dataSideFilter);
+                    } else {
+                        dataSideFilter = dataSideFilter.filter((item) => {
+                            return item[this.id].toLowerCase() !== this.value.toLowerCase();
+                        });
+                        let isEmpty = true;
+                        for (var i = 0, len = jobs.length; i < len; i++) {
+                            if(jobs[i].checked === true){
+                                isEmpty = false;
+                                break;
+                            }
+                        }
+                        if (isEmpty) {
+                            handleAddContent(result);
+                        } else {
+                            handleAddContent(dataSideFilter);
+                        }
+
+                    }
+                }
+            </script>
+        </footer>
+    </body>
+</html>

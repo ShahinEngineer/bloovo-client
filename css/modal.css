@@ -1,0 +1,58 @@
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    margin: auto;
+    border: 1px solid #888;
+    width: 50%;
+    height: 50%;
+}
+
+.add-job-modal {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.add-job-modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f3;
+    height: 10%;
+}
+.add-job-modal-form {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    margin: 5% 2% 2% 2%;
+}
+.form-input-sec-one {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+    height: 40%;
+}
+.input-modal{
+    height: 35px;
+    width: 48%;
+}
+.end-job-modal{
+    display: flex;
+    height: 40%;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
