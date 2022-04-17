@@ -12,40 +12,39 @@
         <div class="main">
             <div class="left-side">
                 <form action="#" method="post" class="demoForm" id="demoForm">
-                    <span class="main-title">Sector</span>
-                    <input type="checkbox" id="sector" name="job[]" value="Sales" />
-                    <label for="Sales">Sales</label><br />
-                    <input type="checkbox" id="sector" name="job[]" value="Airlines" />
-                    <label for="Airlines"> Airlines</label><br />
-                    <input type="checkbox" id="sector" name="job[]" value="Administration" />
-                    <label for="Administration"> Administration</label><br />
-                    <input type="checkbox" id="sector" name="job[]" value="computerSoftware" />
-                    <label for="computerSoftware"> computer Software</label><br />
-                    <span class="main-title">Country</span>
-                    <input type="checkbox" id="country" name="job[]" value="palestine" />
-                    <label for="palestine">Palestine</label><br />
-                    <input type="checkbox" id="country" name="job[]" value="Jordan" />
-                    <label for="Jordan"> Jordan</label><br />
-                    <input type="checkbox" id="country" name="job[]" value="Lebanon" />
-                    <label for="Lebanon"> Lebanon</label><br />
-                    <input type="checkbox" id="country" name="job[]" value="SaudiArabia" />
-                    <label for="SaudiArabia">Saudi Arabia</label><br />
-                    <span class="main-title">City</span>
-                    <input type="checkbox" id="city" name="job[]" value="Beirut" />
-                    <label for="Beirut">Beirut</label><br />
+                    <div>
+                        <div class="main-title">Sector</div>
+                        <input type="checkbox" id="sector" name="job[]" value="Sales" />
+                        <label for="Sales">Sales</label><br />
+                        <input type="checkbox" id="sector" name="job[]" value="Airlines" />
+                        <label for="Airlines"> Airlines</label><br />
+                        <input type="checkbox" id="sector" name="job[]" value="Administration" />
+                        <label for="Administration"> Administration</label><br />
+                        <input type="checkbox" id="sector" name="job[]" value="computerSoftware" />
+                        <label for="computerSoftware"> computer Software</label><br />
+                    </div>
+                    <div>
+                        <div class="main-title">Country</div>
+                        <input type="checkbox" id="country" name="job[]" value="palestine" />
+                        <label for="palestine">Palestine</label><br />
+                        <input type="checkbox" id="country" name="job[]" value="Jordan" />
+                        <label for="Jordan"> Jordan</label><br />
+                        <input type="checkbox" id="country" name="job[]" value="Lebanon" />
+                        <label for="Lebanon"> Lebanon</label><br />
+                        <input type="checkbox" id="country" name="job[]" value="SaudiArabia" />
+                        <label for="SaudiArabia">Saudi Arabia</label><br />
+                    </div>
+                    <div>
+                        <div class="main-title">City</div>
+                        <input type="checkbox" id="city" name="job[]" value="Beirut" />
+                        <label for="Beirut">Beirut</label><br />
+                    </div>
                 </form>
             </div>
             <div class="right-side">
                 <div class="search-bar">
-                    <input
-                        class="search-bar-button"
-                        type="text"
-                        id="searchInput"
-                        onkeyup="handleSearchByTitle(this.value)"
-                        placeholder="Search By Job Title"
-                        name="search"
-                    />
-                    <button id="myBtn" type="button">Add New Job</button>
+                    <input class="search-bar-button" type="text" id="searchInput" placeholder="Search By Job Title" name="search" />
+                    <button id="myBtn" type="button" class="main-button search-button">Add New Job</button>
                 </div>
                 <div class="main-content" id="main-content"></div>
             </div>
@@ -118,7 +117,7 @@
                         $(content).append(
                             `<div class="job" id='job-${result[i]._id}'>
                                 <div class="job-img">
-                                    <img src="./imges/job.png" width="125" height="125" />
+                                    <img src="./imges/job.png" width="100%" height="auto" />
                                 </div>
                                 <div class="job-des">
                                     <span class="main-title-job">${result[i].title}</span>
@@ -151,7 +150,7 @@
                             $(content).append(
                                 `<div class="job" id='job-${obj._id}'>
                                         <div class="job-img">
-                                            <img src="./imges/job.png" width="125" height="125" />
+                                            <img src="./imges/job.png" width="100%" height="auto"/>
                                         </div>
                                         <div class="job-des">
                                             <span class="main-title-job">${obj.title}</span>
@@ -210,7 +209,6 @@
                         document.getElementById('description').value = values.description;
                     }
                 }
-
                 function handleSearchByTitle(val) {
                     const dataFilter = result.filter((item) => {
                         return item.title.toLowerCase().includes(val.toLowerCase());
@@ -241,7 +239,7 @@
                         });
                         let isEmpty = true;
                         for (var i = 0, len = jobs.length; i < len; i++) {
-                            if(jobs[i].checked === true){
+                            if (jobs[i].checked === true) {
                                 isEmpty = false;
                                 break;
                             }
@@ -251,9 +249,32 @@
                         } else {
                             handleAddContent(dataSideFilter);
                         }
-
                     }
                 }
+
+                function debounce(func, wait) {
+                    let timeout;
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func.apply(this, ...args);
+                        };
+
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                    };
+                }
+
+                $('#searchInput').keyup(
+                    debounce(function () {
+                        var $this = $(this);
+                        var val = $this.val();
+                        const dataFilter = result.filter((item) => {
+                            return item.title.toLowerCase().includes(val.toLowerCase());
+                        });
+                        handleAddContent(dataFilter);
+                    }, 1000)
+                );
             </script>
         </footer>
     </body>
